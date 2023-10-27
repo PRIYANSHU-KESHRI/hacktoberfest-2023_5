@@ -1,0 +1,44 @@
+Implement the next permutation, which rearranges the list of numbers into Lexicographically next greater permutation of list of numbers. If such arrangement is not possible, it must be rearranged to the lowest possible order i.e. sorted in an ascending order. You are given an list of numbers arr[ ] of size N.
+
+Example 1:
+
+Input: N = 6
+arr = {1, 2, 3, 6, 5, 4}
+Output: {1, 2, 4, 3, 5, 6}
+Explaination: The next permutation of the 
+given array is {1, 2, 4, 3, 5, 6}.
+
+
+
+
+def nextPermutation(arr):
+    n = len(arr)
+    
+    # Find the first element from the right that is smaller than the element immediately to its right
+    i = n - 2
+    while i >= 0 and arr[i] >= arr[i + 1]:
+        i -= 1
+    
+    # If no such element is found, the array is in descending order, so we reverse it to make it ascending
+    if i == -1:
+        arr.reverse()
+        return arr
+    
+    # Find the smallest element to the right of i that is larger than arr[i]
+    j = n - 1
+    while arr[j] <= arr[i]:
+        j -= 1
+    
+    # Swap arr[i] and arr[j]
+    arr[i], arr[j] = arr[j], arr[i]
+    
+    # Reverse the subarray to the right of i
+    arr[i + 1:] = arr[i + 1:][::-1]
+    
+    return arr
+
+# Example usage
+N = 6
+arr = [1, 2, 3, 6, 5, 4]
+result = nextPermutation(arr)
+print(result)
